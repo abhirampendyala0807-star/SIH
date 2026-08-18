@@ -77,7 +77,6 @@ Dashboard displays everything with source indicators
 - [ ] Dynamic replanning (traffic alerts, itinerary optimization)
 - [ ] Hotel booking flow (mock checkout)
 - [ ] Pilgrimage module (contextual detection)
-- [ ] Kumbh Mela admin dashboard
 - [ ] User profiles and saved preferences
 - [ ] Budget optimization assistant
 - [ ] Transport booking (flights, trains, buses)
