@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# API keys — NEVER commit these
+js/secrets.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo

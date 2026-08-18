@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compass — Your Intelligent Travel Agent</title>
+    <meta name="description" content="Plan, compare, book and manage your journey using verified local information tailored to your budget and preferences.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app-container">
+
+        <!-- ==================== LANDING ==================== -->
+        <section id="landing-view" class="view active">
+            <header class="top-nav">
+                <div class="logo">Compass<span>.</span></div>
+                <button class="btn-ghost" onclick="app.showView('profile-view')">Profile</button>
+            </header>
+
+            <div class="hero-section">
+                <h1>Your entire trip. One intelligent agent.</h1>
+                <p>Plan, compare, book and manage your journey using local information tailored to your budget, preferences and real-world conditions.</p>
+                <div class="cta-group">
+                    <button id="btn-plan-trip" class="btn btn-primary" onclick="app.showView('planning-view')">Plan My Trip</button>
+                    <button class="btn btn-secondary" onclick="app.showView('explore-view')">Explore Destinations</button>
+                </div>
+            </div>
+
+            <div class="prompts-section">
+                <h3>Try asking:</h3>
+                <div class="prompts-grid">
+                    <div class="prompt-chip" onclick="app.usePrompt(this)" data-dest="goa" data-days="5" data-budget="40000">"Plan a 5-day Goa trip under ₹40,000."</div>
+                    <div class="prompt-chip" onclick="app.usePrompt(this)" data-dest="kochi" data-days="4" data-budget="30000">"Plan a family trip to Kerala."</div>
+                    <div class="prompt-chip" onclick="app.usePrompt(this)" data-dest="mysore" data-days="3" data-budget="20000">"I have 3 days in Mysore."</div>
+                    <div class="prompt-chip" onclick="app.usePrompt(this)" data-dest="pondicherry" data-days="3" data-budget="25000">"Weekend getaway to Pondicherry."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== EXPLORE ==================== -->
+        <section id="explore-view" class="view">
+            <header class="top-nav">
+                <button class="btn-back" onclick="app.showView('landing-view')">Back</button>
+                <div class="view-title">Explore</div>
+                <div></div>
+            </header>
+            <div id="explore-grid" class="explore-grid">
+                <!-- Destination cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- ==================== TRIP PLANNING FORM ==================== -->
+        <section id="planning-view" class="view">
+            <header class="top-nav">
+                <button class="btn-back" onclick="app.showView('landing-view')">Back</button>
+                <div class="view-title">New Trip</div>
+                <div></div>
+            </header>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="input-destination">Where to?</label>
+                    <input type="text" id="input-destination" placeholder="e.g. Goa, Kochi, Hampi..." autocomplete="off">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="input-start-date">Start Date</label>
+                        <input type="date" id="input-start-date">
+                    </div>
+                    <div class="col">
+                        <label for="input-end-date">End Date</label>
+                        <input type="date" id="input-end-date">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="input-adults">Adults</label>
+                        <input type="number" id="input-adults" value="2" min="1" max="10">
+                    </div>
+                    <div class="col">
+                        <label for="input-children">Children</label>
+                        <input type="number" id="input-children" value="0" min="0" max="10">
+                    </div>
+                    <div class="col">
+                        <label for="input-elderly">Elderly</label>
+                        <input type="number" id="input-elderly" value="0" min="0" max="10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget</label>
+                    <div class="budget-options" id="budget-options">
+                        <button class="chip" data-value="10000" onclick="app.selectBudget(this)">₹10,000</button>
+                        <button class="chip" data-value="25000" onclick="app.selectBudget(this)">₹25,000</button>
+                        <button class="chip active" data-value="40000" onclick="app.selectBudget(this)">₹40,000</button>
+                        <button class="chip" data-value="50000" onclick="app.selectBudget(this)">₹50,000</button>
+                        <button class="chip" data-value="custom" onclick="app.selectBudget(this)">Custom</button>
+                    </div>
+                    <input type="number" id="input-budget-custom" class="mt-2 hidden" placeholder="Enter your budget in ₹">
+                </div>
+
+                <div class="form-group">
+                    <label>What are you looking for?</label>
+                    <div class="multi-select" id="pref-activities">
+                        <button class="chip" data-pref="relaxation" onclick="app.togglePref(this)">Relaxation</button>
+                        <button class="chip" data-pref="adventure" onclick="app.togglePref(this)">Adventure</button>
+                        <button class="chip" data-pref="food" onclick="app.togglePref(this)">Food</button>
+                        <button class="chip" data-pref="nightlife" onclick="app.togglePref(this)">Nightlife</button>
+                        <button class="chip" data-pref="culture" onclick="app.togglePref(this)">Culture</button>
+                        <button class="chip" data-pref="nature" onclick="app.togglePref(this)">Nature</button>
+                        <button class="chip" data-pref="history" onclick="app.togglePref(this)">History</button>
+                        <button class="chip" data-pref="religious" onclick="app.togglePref(this)">Religious sites</button>
+                        <button class="chip" data-pref="shopping" onclick="app.togglePref(this)">Shopping</button>
+                        <button class="chip" data-pref="family" onclick="app.togglePref(this)">Family-friendly</button>
+                    </div>
+                </div>
+
+                <button id="btn-build-trip" class="btn btn-primary full-width mt-4" onclick="app.buildTrip()">
+                    Build My Trip
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== LOADING ==================== -->
+        <section id="loading-view" class="view">
+            <div class="loading-container">
+                <div class="spinner"></div>
+                <h2>Building your trip...</h2>
+                <ul id="loading-steps">
+                    <li>Identifying destination</li>
+                    <li>Analyzing your budget</li>
+                    <li>Finding local attractions</li>
+                    <li>Searching accommodation</li>
+                    <li>Checking live weather</li>
+                    <li>Optimizing your itinerary</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ==================== TRIP DASHBOARD ==================== -->
+        <section id="dashboard-view" class="view">
+            <header class="top-nav">
+                <button class="btn-back" onclick="app.showView('landing-view')">Back</button>
+                <div class="view-title">Your Trip</div>
+                <div></div>
+            </header>
+
+            <div class="trip-header">
+                <div class="trip-title-row">
+                    <h1 id="trip-title">—</h1>
+                </div>
+                <div class="trip-meta">
+                    <span id="trip-dates">—</span> · <span id="trip-pax">—</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Top row: weather + budget side by side on desktop -->
+                <div class="dashboard-top">
+                    <!-- Weather -->
+                    <div id="weather-widget" class="weather-widget hidden">
+                        <div class="weather-current">
+                            <div class="weather-icon" id="weather-icon">—</div>
+                            <div>
+                                <div class="weather-temp" id="weather-temp">—</div>
+                                <div class="weather-desc" id="weather-desc">—</div>
+                            </div>
+                        </div>
+                        <div class="weather-forecast" id="weather-forecast"></div>
+                    </div>
+
+                    <!-- Budget -->
+                    <div class="budget-card" id="budget-card">
+                        <div class="budget-header">
+                            <div>
+                                <div class="budget-label">Total Budget</div>
+                                <div class="budget-amount" id="budget-total">—</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="budget-label">Estimated Spend</div>
+                                <div class="budget-amount" id="budget-spent">—</div>
+                            </div>
+                        </div>
+                        <div class="budget-bar" id="budget-bar-container"></div>
+                        <div class="budget-status" id="budget-status"></div>
+                        <div class="budget-legend" id="budget-legend"></div>
+                    </div>
+                </div>
+
+                <!-- Itinerary -->
+                <div>
+                    <div class="section-header">
+                        <h2>Itinerary</h2>
+                        <span class="source-tag">Live data</span>
+                    </div>
+
+                    <div class="itinerary-tabs" id="itinerary-tabs">
+                        <!-- Day tabs injected by JS -->
+                    </div>
+
+                    <div class="itinerary-timeline" id="itinerary-container">
+                        <!-- Timeline items injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary full-width" onclick="app.showView('hotels-view')">
+                        Discover Hotels
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== HOTELS ==================== -->
+        <section id="hotels-view" class="view">
+            <header class="top-nav">
+                <button class="btn-back" onclick="app.showView('dashboard-view')">Back</button>
+                <div class="view-title">Hotels</div>
+                <div></div>
+            </header>
+
+            <div class="filters" id="hotel-filters">
+                <button class="chip active" onclick="app.filterHotels('all', this)">All</button>
+                <button class="chip" onclick="app.filterHotels('budget', this)">Budget</button>
+                <button class="chip" onclick="app.filterHotels('mid', this)">Mid-range</button>
+                <button class="chip" onclick="app.filterHotels('premium', this)">Premium</button>
+            </div>
+
+            <div class="hotel-list" id="hotel-list-container">
+                <!-- Hotel cards injected by JS -->
+            </div>
+        </section>
+
+        <!-- ==================== PROFILE (Placeholder) ==================== -->
+        <section id="profile-view" class="view">
+            <header class="top-nav">
+                <button class="btn-back" onclick="app.showView('landing-view')">Back</button>
+                <div class="view-title">Profile</div>
+                <div></div>
+            </header>
+            <div class="empty-state">
+                <div class="es-icon">P</div>
+                <h3>Your Profile</h3>
+                <p class="mt-2" style="color: var(--clr-text-tertiary); font-size: 0.88rem;">Save your preferences, travel history, and group profiles here. Coming in the next version.</p>
+            </div>
+        </section>
+
+        <!-- Hidden map for Google Places API -->
+        <div id="map-hidden"></div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" id="bottom-nav">
+            <button class="nav-item active" data-view="landing-view" onclick="app.navTo(this)">
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" data-view="dashboard-view" onclick="app.navTo(this)">
+                <span class="nav-label">Trip</span>
+            </button>
+            <button class="nav-item" data-view="explore-view" onclick="app.navTo(this)">
+                <span class="nav-label">Explore</span>
+            </button>
+            <button class="nav-item" data-view="hotels-view" onclick="app.navTo(this)">
+                <span class="nav-label">Hotels</span>
+            </button>
+            <button class="nav-item" data-view="profile-view" onclick="app.navTo(this)">
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/secrets.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Dynamically load Google Maps with the key from secrets.js
+        if (CONFIG.GOOGLE_API_KEY && CONFIG.GOOGLE_API_KEY !== 'PASTE_YOUR_GOOGLE_API_KEY_HERE') {
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=' + CONFIG.GOOGLE_API_KEY + '&libraries=places&callback=initMap';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        } else {
+            console.warn('Google API key not found. Copy js/secrets.example.js to js/secrets.js and add your key.');
+        }
+    </script>
+</body>
+</html>
